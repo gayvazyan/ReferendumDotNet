@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Referendum.Repositories
+namespace Referendum.core
 {
    
     public interface IRepositories<TEntity> where TEntity : class

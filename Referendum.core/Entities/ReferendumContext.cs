@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Referendum.Model
+namespace Referendum.core.Entities
 {
     public partial class ReferendumContext : DbContext
     {
@@ -15,7 +15,7 @@ namespace Referendum.Model
         {
         }
 
-        public virtual DbSet<Table1> Table1 { get; set; }
+        public virtual DbSet<CitizenDb> CitizenDb { get; set; }
 
 //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //        {
@@ -28,7 +28,7 @@ namespace Referendum.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Table1>(entity =>
+            modelBuilder.Entity<CitizenDb>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });

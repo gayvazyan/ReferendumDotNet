@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Referendum.Model;
-using Referendum.Repositories;
+using Referendum.core;
+using Referendum.core.Entities;
 
 namespace Referendum.Pages.Help
 {
-    
+
     public class IndexModel : PageModel
     {
         private readonly ICitizenRepasitory _citizenRepasitory;
@@ -19,14 +19,14 @@ namespace Referendum.Pages.Help
         }
         public void OnGet()
         {
-            Table1 obje = new Table1 { Id = 1, Hhh = "GGG", Hhhgg = "AAA" };
+            // CitizenDb obje = new CitizenDb { Id = 1, FirstName = "Garegin", LastName = "Այվազյան", Opaque = "sfsfsf", Ssn = "0985455555", Time = "12.03.2020" };
+            // _citizenRepasitory.Insert(obje);
             var newobe = _citizenRepasitory.GetByID(1);
             _citizenRepasitory.Delete(newobe);
         }
-           
+
         public void OnPost()
         {
-                Table1 obje = new Table1 { Id = 1, Hhh = "GGG", Hhhgg = "AAA" };
-            }
+        }
     }
 }

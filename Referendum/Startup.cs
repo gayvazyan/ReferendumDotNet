@@ -21,11 +21,11 @@ namespace CoreUI_Free_Bootstrap_Admin
         public void ConfigureServices(IServiceCollection services)
         {
 
-            CoreExtensions.ConfigureDbContext(Configuration, services);
+            ServicesInitializer.ConfigureDbContext(Configuration, services);
 
             //add to injections
 
-            CoreExtensions.ConfigureServices(services);
+            ServicesInitializer.ConfigureServices(services);
 
 
             services.Configure<CookiePolicyOptions>(options =>

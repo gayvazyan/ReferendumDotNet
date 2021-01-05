@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Referendum.Model;
+using Referendum.core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Referendum.Repositories
+namespace Referendum.core
 {
     public class Repositories<TEntity> : IRepositories<TEntity> where TEntity : class
     {
