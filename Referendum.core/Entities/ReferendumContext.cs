@@ -16,22 +16,9 @@ namespace Referendum.core.Entities
         }
 
         public virtual DbSet<CitizenDb> CitizenDb { get; set; }
-
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server= DESKTOP-9GM7NOP\\SQLEXPRESS;Database=referendumDB;Trusted_Connection=True;");
-//            }
-//        }
+        public virtual DbSet<ReferendumDb> ReferendumDb { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CitizenDb>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-        }
+        {}
     }
 }

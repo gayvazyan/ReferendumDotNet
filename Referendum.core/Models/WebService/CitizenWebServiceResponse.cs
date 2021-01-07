@@ -7,11 +7,11 @@ namespace Referendum.core.Models
 {
 	public class CitizenWebServiceResponse
 	{
-		public string opaque { get; set; }
-		public string last_name { get; set; }
-		public string first_name { get; set; }
-		public string SSN { get; set; }
-		public string time {get;set;}
+		public string Opaque { get; set; }
+		public string Last_name { get; set; }
+		public string First_name { get; set; }
+		public string Ssn { get; set; }
+		public string Time {get;set;}
 		
 	}
 }

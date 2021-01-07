@@ -1,5 +1,266 @@
 ﻿@page
 @model Referendum.Pages.IndexModel
 @{
-    <h1>Index</h1>
+    ViewData["Title"] = "ԿԸՀ-առցանց ստորագրահավաք";
 }
+
+
+
+<form method="post" id="form">
+
+    <input type="hidden" asp-for="@Model.Citizen.Opaque" value="@Model.Citizen.Opaque" />
+    <input type="hidden" asp-for="@Model.Citizen.First_name" value="@Model.Citizen.First_name" />
+    <input type="hidden" asp-for="@Model.Citizen.Last_name" value="@Model.Citizen.Last_name" />
+    <input type="hidden" asp-for="@Model.Citizen.Ssn" value="@Model.Citizen.Ssn" />
+    <input type="hidden" asp-for="@Model.Citizen.Time" value="@Model.Citizen.Time" />
+    <input type="hidden" asp-for="@Model.DataString" value="@Model.DataString" />
+    <input type="hidden" asp-for="@Model.Show" value="@Model.Show" />
+    <input type="hidden" asp-for="@Model.Connect" value="@Model.Connect" />
+    <input type="hidden" asp-for="@Model.ReferendumId" value="@Model.ReferendumId" />
+
+    @if (!Model.Connect)
+    {
+
+        <div style="text-align:center" class="card">
+            <div class="card-body row">
+                <div class="mt-0 mb-3 mx-3 w-100">
+
+                    @if (Model.Errors.Count > 0)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <ul class="m-0">
+                                @foreach (var error in Model.Errors)
+                                {
+                                    <li>@error.Code: @error.Description</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+
+                    @if (!Model.Show)
+                    {
+                        <div class="card card-input">
+                            <div class="row">
+                                <div class="col-10 ">
+                                    <div class="card-body p-0 d-flex align-items-center">
+                                        <i class="nav-icon icon-login bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+                                        <div>
+                                            <div class="text-value-sm text-info">Մուտք համակարգ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="float:right" class="col-2">
+                                    <a target="_blank" href="https://www.ekeng.am/hy/eid_auth">
+                                        <i style="float:right" class="nav-icon icon-info bg-blue p-4 px-5 font-2xl  text-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row margin-top-20">
+                            <div class="col-12 mt-2">
+                                <img src="~/images/id.jpg">
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label class="text-success">Առցանց ստորագրահավաքներին միանալու համար անհրաժեշտ է</label>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label class="text-success"> մուտք գործել համակարգ նույնականացման քարտով </label>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-info text-white" onclick="EnterApp()"><i class="nav-icon icon-credit-card text-white"></i>  Մուտք համակարգ</a>
+                            </div>
+                        </div>
+
+
+
+                    }
+                    else
+                    {
+                        <div class="card card-input">
+                            <div class="row">
+                                <div class="col-10 ">
+                                    <div class="card-body p-0 d-flex align-items-center text-center">
+                                        <i class="nav-icon icon-user-following bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+                                        <div>
+                                            <p class="text-muted">ՀԾՀ՝<b> @Model.Citizen.Ssn </b></p>
+                                            <p class="text-muted">Ազգանուն,Անուն՝ <b> @Model.Citizen.First_name  @Model.Citizen.Last_name</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="float:right" class="col-2">
+                                    <a href="/Index">
+                                        <i style="float:right" class="nav-icon icon-logout bg-blue p-4 px-5 font-2xl  text-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @foreach (var item in Model.ReferendumList)
+                        {
+                            <div class="row margin-top-20">
+                                <div class="col-12">
+                                    <div class="alert alert-secondary border" role="alert">
+                                        <h5 class="text-info">Հանրաքվեի հարցը!</h5>
+                                        <p class="text-value-sm text-muted font-weight-normal">@item.Question</p>
+                                        <br />
+                                        <a class="btn btn-success text-white" onclick="ConnectRef(@item.Id)"><i class="nav-icon icon-pencil"></i> Միանում եմ</a>
+                                        <br />
+                                        <br />
+                                        <h4 class="text-value-sm text-muted font-weight-normal">Առցանց ստորագրահավաքին միացել է՝ <b> @item.ConnectionCount քաղաքացի</b></h4>
+                                        <br />
+                                        <h5 class="text-value-sm text-muted font-weight-normal"> * Առցանց ստորագրահավաքը հասանելի է <b> @CommonFunctions.GetDateString(item.StartDate) - @CommonFunctions.GetDateString(item.EndDate) </b> </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    }
+
+    else
+    {
+        <div style="text-align:center" class="card">
+            <div class="card-body row">
+                <div class="mt-0 mb-3 mx-3 w-100">
+
+
+
+                    <div class="card card-input">
+                        <div class="row">
+                            <div class="col-10 ">
+                                <div class="card-body p-0 d-flex align-items-center text-center">
+                                    <i class="nav-icon icon-user-following bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+                                    <div>
+                                        <p class="text-muted">ՀԾՀ՝<b> @Model.Citizen.Ssn </b></p>
+                                        <p class="text-muted">Ազգանուն,Անուն՝ <b> @Model.Citizen.First_name  @Model.Citizen.Last_name</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float:right" class="col-2">
+                                <a href="/Index">
+                                    <i style="float:right" class="nav-icon icon-logout bg-blue p-4 px-5 font-2xl  text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center" class="card margin-top-20">
+                        <div class="col-12">
+                            <div class="alert alert-light border" role="alert">
+                                <h3 class="text-info">ՀԱՅՏԱՐԱՐՈՒԹՅՈՒՆ</h3>
+                                <h3 class="text-info">ԱՌՑԱՆՑ ՍՏՈՐԱԳՐՈՒԹՅՈՒՆՆԵՐԻ ՀԱՎԱՔՄԱՆԸ</h3>
+                                <h3 class="text-info">ՄԻԱՆԱԼՈՒ ՎԵՐԱԲԵՐՅԱԼ</h3>
+                                <br />
+                                <h5><span>Ես @Model.Citizen.Last_name  @Model.Citizen.First_name</span><span>Ս, հանրային ծառայության համար՝ @Model.Citizen.Ssn </span></h5>
+                                <h5>էլեկտրոնայնին կարգով տրված սույն հայտարարությամբ միանում եմ</h5>
+                                <h5>@Model.ReferendumModel.Question</h5>
+                                <h5><span>Հայտարարությունը տվեց՝ @Model.Citizen.Last_name  @Model.Citizen.First_name</span><span>Ը</span></h5>
+                                <h5><span>Հայտարարությունը ամսաթիվը՝ @DateTime.Now.ToShortDateString()</span><span></span></h5>
+                                <br />
+                                <br />
+                                <a class="btn btn-success text-white" onclick="Connect()"><i class="nav-icon icon-note"></i> Միանում եմ</a>
+                                <a class="btn btn-danger text-white" onclick="Cencel()"><i class="nav-icon icon-action-undo text-white"></i> Չեղարկել</a>
+                                <a class="btn btn-secondary text-white" onclick="Cencel()"><i class="nav-icon icon-printer text-white"></i> Տպել հայտարարությունը</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+</form>
+
+
+
+
+@section Scripts {
+    <script>
+
+        function ConnectRef(refId) {
+            $("#ReferendumId").val(refId);
+            $("form").submit();
+        }
+
+        function Connect() {
+            $("#Connect").val(true);
+            $("#Show").val(true);
+            $("form").submit();
+        }
+
+        function Cencel() {
+            $("#Connect").val(false);
+            $("#Show").val(false);
+            $("form").submit();
+        }
+
+        function EnterApp() {
+            // Token provided by EKENG
+            var token = "66a53b58-8bd9-3cc3-9afe-89105c4f6b82";
+            // Server side generated user session ID
+            var opaque = "1cr8j1po4ejoer6nqm423jdpn3";
+
+            var data1 = "Dtkn0C9TGORKyCgDJRZUYlvcfaQKWt5kqSebYJ/pDTlrv//qPO0AZWOqDqNxaNPpg8Ugzr7SdZ9yFbVn/8QCwP/zWbM/4leue4OjPPmuPNRKpiA+mNv/yd/ZPP6mwg2DtAZDoQsHJiFxGjaGUI4docTUq/aorZqYD4l1lEV/JqjKqva+3HRqcOXLGYnPmCbyBLD0hvzG445gCGUuOeHHfDnpoG4zpyb6iw+eZwrYTT3dZpK2uNfn3UGESZVi7qPcHa8YI6pGvQPAbnJ1JGuC5QKVd6k7uJP4osaCNko3si9LbYvaCUjTig6v6JVZ2ecOQkpxKnEEfkUp/FjR59oGGfQ1gO/6ZkjgzCw66jjifCkF3kzwo/4Xga+Zl/2pX3ZR";
+            //$.ajax({
+            //    type: "POST",
+            //    url: "https://eid.ekeng.am/authorize",
+            //    data: {
+            //        token: token,
+            //        opaque: opaque
+            //    },
+            //    async: false,
+            //    timeout: 6000,
+            //    dataType: 'json',
+            //    success: function (result) {
+
+            //alert(opaque);
+            //alert(result.data);
+
+            //$.ajax({
+            //    type: "GET",
+            //    url: '/Enter',
+            //    data: ({ value: result.data }),
+
+
+
+            $("#DataString").val(data1);
+            $("form").submit();
+
+
+
+
+            //$.ajax({
+            //    type: "post",
+            //    url: "/BprData/BprResult",
+            //    contentType: 'application/json',
+            //    data: JSON.stringify(data1),
+            //});
+
+
+
+
+
+            //  alert("Դուք հաջողությամբ մուտք գործեցիք համակարգ");
+
+            //  },
+            // error: function (xhr, ajaxOptions, thrownError) {
+
+            //    alert("Please insert your eID card into the reader");
+            //    }
+            // });
+        }
+    </script>
+}
+

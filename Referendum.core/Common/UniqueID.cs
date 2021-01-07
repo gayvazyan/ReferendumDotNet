@@ -2,7 +2,6 @@
 
 namespace Referendum.core.Common
 {
-{
 	public class UniqueID
 	{
 		public static string GetUniqueID()

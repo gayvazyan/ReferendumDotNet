@@ -20,5 +20,7 @@ namespace Referendum.core.Entities
         public string Ssn { get; set; }
         [StringLength(50)]
         public string Time { get; set; }
+        public int? ReferendumId { get; set; }
+        
     }
 }

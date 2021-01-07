@@ -12,17 +12,16 @@ namespace Referendum.Pages.Help
 
     public class IndexModel : PageModel
     {
-        private readonly ICitizenRepasitory _citizenRepasitory;
-        public IndexModel(ICitizenRepasitory citizenRepasitory)
+
+        public IndexModel()
         {
-            _citizenRepasitory = citizenRepasitory;
         }
         public void OnGet()
         {
-            // CitizenDb obje = new CitizenDb { Id = 1, FirstName = "Garegin", LastName = "Այվազյան", Opaque = "sfsfsf", Ssn = "0985455555", Time = "12.03.2020" };
-            // _citizenRepasitory.Insert(obje);
-            var newobe = _citizenRepasitory.GetByID(1);
-            _citizenRepasitory.Delete(newobe);
+            //// CitizenDb obje = new CitizenDb { Id = 1, FirstName = "Garegin", LastName = "Այվազյան", Opaque = "sfsfsf", Ssn = "0985455555", Time = "12.03.2020" };
+            //// _citizenRepasitory.Insert(obje);
+            //var newobe = _citizenRepasitory.GetByID(1);
+            //_citizenRepasitory.Delete(newobe);
         }
 
         public void OnPost()

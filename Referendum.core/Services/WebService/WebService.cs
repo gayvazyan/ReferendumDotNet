@@ -32,13 +32,13 @@ namespace Referendum.core
                 CitizenWebServiceResponse decriptedDataDeserialize = JsonConvert.DeserializeObject<CitizenWebServiceResponse>(replacedDecriptedData);
 
 
-                if (decriptedDataDeserialize.opaque != null)
+                if (decriptedDataDeserialize.Opaque != null)
                 {
-                    citizenWebServiceResponse.opaque = decriptedDataDeserialize.opaque;
-                    citizenWebServiceResponse.first_name = decriptedDataDeserialize.first_name;
-                    citizenWebServiceResponse.last_name = decriptedDataDeserialize.last_name;
-                    citizenWebServiceResponse.SSN = decriptedDataDeserialize.SSN;
-                    citizenWebServiceResponse.time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"); ;
+                    citizenWebServiceResponse.Opaque = decriptedDataDeserialize.Opaque;
+                    citizenWebServiceResponse.First_name = decriptedDataDeserialize.First_name;
+                    citizenWebServiceResponse.Last_name = decriptedDataDeserialize.Last_name;
+                    citizenWebServiceResponse.Ssn = decriptedDataDeserialize.Ssn;
+                    citizenWebServiceResponse.Time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"); ;
                 }
                 else
                 {
@@ -78,13 +78,13 @@ namespace Referendum.core
 
                 if (content.Status == "OK")
                 {
-                    if (decriptedDataDeserialize.opaque != null)
+                    if (decriptedDataDeserialize.Opaque != null)
                     {
-                        citizenWebServiceResponse.opaque = decriptedDataDeserialize.opaque;
-                        citizenWebServiceResponse.first_name = decriptedDataDeserialize.first_name;  
-                        citizenWebServiceResponse.last_name = decriptedDataDeserialize.last_name;  
-                        citizenWebServiceResponse.SSN = decriptedDataDeserialize.SSN;  
-                        citizenWebServiceResponse.time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"); ;  
+                        citizenWebServiceResponse.Opaque = decriptedDataDeserialize.Opaque;
+                        citizenWebServiceResponse.First_name = decriptedDataDeserialize.First_name;  
+                        citizenWebServiceResponse.Last_name = decriptedDataDeserialize.Last_name;  
+                        citizenWebServiceResponse.Ssn = decriptedDataDeserialize.Ssn;  
+                      //  citizenWebServiceResponse.Time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"); 
                     }
                     else
                     {
