@@ -27,7 +27,7 @@ namespace Referendum.Pages
             Citizen = new CitizenWebServiceResponse();
             ReferendumList = new List<ReferendumDb>();
             ReferendumModel = new ReferendumDb();
-            Result = new BprResult();
+            Result = new WebServiceResponse();
         }
 
         [BindProperty]
@@ -44,7 +44,7 @@ namespace Referendum.Pages
         [BindProperty]
         public bool Connect { get; set; }
         [BindProperty]
-        public BprResult Result { get; set; }
+        public WebServiceResponse Result { get; set; }
 
         [BindProperty]
         public string OpaqueUniqueID { get; set; }
@@ -61,9 +61,9 @@ namespace Referendum.Pages
 
         public void PrepareData()
         {
-            if (Result.status=="OK")
+            if (Result.Status=="OK")
             {
-                Citizen = _webService.GetCitizen(Result.data);
+                Citizen = _webService.GetCitizen(Result.Data);
                 if (Citizen != null)
                 {
                     ReferendumList = _referendumRepasitory.GetAll().ToList();
@@ -71,8 +71,11 @@ namespace Referendum.Pages
                 }
             }
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            //var test1 = await _webService.GetCitizenBySSN("6311780089");
+            var test1 = await _webService.GetCitizenBySSNTest("6311780089");
+           
             OpaqueUniqueID = UniqueID.GetUniqueID();
         }
 
