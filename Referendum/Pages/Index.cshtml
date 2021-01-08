@@ -13,10 +13,13 @@
     <input type="hidden" asp-for="@Model.Citizen.Last_name" value="@Model.Citizen.Last_name" />
     <input type="hidden" asp-for="@Model.Citizen.Ssn" value="@Model.Citizen.Ssn" />
     <input type="hidden" asp-for="@Model.Citizen.Time" value="@Model.Citizen.Time" />
-    <input type="hidden" asp-for="@Model.DataString" value="@Model.DataString" />
+
     <input type="hidden" asp-for="@Model.Show" value="@Model.Show" />
     <input type="hidden" asp-for="@Model.Connect" value="@Model.Connect" />
     <input type="hidden" asp-for="@Model.ReferendumId" value="@Model.ReferendumId" />
+    <input type="hidden" asp-for="@Model.Result.status" value="@Model.Result.status" />
+    <input type="hidden" asp-for="@Model.Result.data" value="@Model.Result.data" />
+    <input type="hidden" asp-for="@Model.OpaqueUniqueID" value="@Model.OpaqueUniqueID" />
 
     @if (!Model.Connect)
     {
@@ -71,7 +74,7 @@
                                 <label class="text-success"> մուտք գործել համակարգ նույնականացման քարտով </label>
                             </div>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-info text-white" onclick="EnterApp()"><i class="nav-icon icon-credit-card text-white"></i>  Մուտք համակարգ</a>
+                                    <a class="btn btn-info text-white" onclick="EnterApp('@Model.OpaqueUniqueID')"><i class="nav-icon icon-credit-card text-white"></i>  Մուտք համակարգ</a>
                             </div>
                         </div>
 
@@ -162,7 +165,7 @@
                                 <h5><span>Ես @Model.Citizen.Last_name  @Model.Citizen.First_name</span><span>Ս, հանրային ծառայության համար՝ @Model.Citizen.Ssn </span></h5>
                                 <h5>էլեկտրոնայնին կարգով տրված սույն հայտարարությամբ միանում եմ</h5>
                                 <h5>@Model.ReferendumModel.Question</h5>
-                                <h5><span>Հայտարարությունը տվեց՝ @Model.Citizen.Last_name  @Model.Citizen.First_name</span><span>Ը</span></h5>
+                                <h5><span>Հայտարարությունը տվեց՝ @Model.Citizen.Last_name  @Model.Citizen.First_name </span><span>Ը</span></h5>
                                 <h5><span>Հայտարարությունը ամսաթիվը՝ @DateTime.Now.ToShortDateString()</span><span></span></h5>
                                 <br />
                                 <br />
@@ -206,54 +209,39 @@
             $("form").submit();
         }
 
-        function EnterApp() {
+        function EnterApp(data1) {
             // Token provided by EKENG
             var token = "66a53b58-8bd9-3cc3-9afe-89105c4f6b82";
             // Server side generated user session ID
-            var opaque = "1cr8j1po4ejoer6nqm423jdpn3";
+            var opaque = data1;
 
-           //var data1 = "Dtkn0C9TGORKyCgDJRZUYlvcfaQKWt5kqSebYJ/pDTlrv//qPO0AZWOqDqNxaNPpg8Ugzr7SdZ9yFbVn/8QCwP/zWbM/4leue4OjPPmuPNRKpiA+mNv/yd/ZPP6mwg2DtAZDoQsHJiFxGjaGUI4docTUq/aorZqYD4l1lEV/JqjKqva+3HRqcOXLGYnPmCbyBLD0hvzG445gCGUuOeHHfDnpoG4zpyb6iw+eZwrYTT3dZpK2uNfn3UGESZVi7qPcHa8YI6pGvQPAbnJ1JGuC5QKVd6k7uJP4osaCNko3si9LbYvaCUjTig6v6JVZ2ecOQkpxKnEEfkUp/FjR59oGGfQ1gO/6ZkjgzCw66jjifCkF3kzwo/4Xga+Zl/2pX3ZR";
+            //var data1 = "Dtkn0C9TGORKyCgDJRZUYlvcfaQKWt5kqSebYJ/pDTlrv//qPO0AZWOqDqNxaNPpg8Ugzr7SdZ9yFbVn/8QCwP/zWbM/4leue4OjPPmuPNRKpiA+mNv/yd/ZPP6mwg2DtAZDoQsHJiFxGjaGUI4docTUq/aorZqYD4l1lEV/JqjKqva+3HRqcOXLGYnPmCbyBLD0hvzG445gCGUuOeHHfDnpoG4zpyb6iw+eZwrYTT3dZpK2uNfn3UGESZVi7qPcHa8YI6pGvQPAbnJ1JGuC5QKVd6k7uJP4osaCNko3si9LbYvaCUjTig6v6JVZ2ecOQkpxKnEEfkUp/FjR59oGGfQ1gO/6ZkjgzCw66jjifCkF3kzwo/4Xga+Zl/2pX3ZR";
             $.ajax({
                 type: "POST",
                 url: "https://eid.ekeng.am/authorize",
                 data: {
                     token: token,
-                   opaque: opaque
+                    opaque: opaque
                 },
                 async: false,
                 timeout: 6000,
                 dataType: 'json',
                 success: function (result) {
 
-            //alert(opaque);
-            //alert(result.data);
+                    alert("Դուք հաջողությամբ մուտք գործեցիք համակարգ");
+                    $("#Result_status").val(result.status);
+                    $("#Result_data").val(result.data);
+                    $("form").submit();
 
-            //$.ajax({
-            //    type: "GET",
-            //    url: '/Enter',
-            //    data: ({ value: result.data }),
-
-
-            alert("Դուք հաջողությամբ մուտք գործեցիք համակարգ");
-            $("#DataString").val(result.data);
-            $("form").submit();
-
-
-
-
-            //$.ajax({
-            //    type: "post",
-            //    url: "/BprData/BprResult",
-            //    contentType: 'application/json',
-            //    data: JSON.stringify(data1),
-            //});
-
-
-            
-
-              },
-             error: function (xhr, ajaxOptions, thrownError) { alert("Please insert your eID card into the reader");}
-             });
+                    //$.ajax({
+                    //    type: "post",
+                    //    url: "/BprData/BprResult",
+                    //    contentType: 'application/json',
+                    //    data: JSON.stringify(data1),
+                    //});
+                },
+                error: function (xhr, ajaxOptions, thrownError) { alert("Please insert your eID card into the reader"); }
+            });
         }
     </script>
 }

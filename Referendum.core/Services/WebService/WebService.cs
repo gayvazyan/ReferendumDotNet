@@ -145,20 +145,5 @@ namespace Referendum.core
             byte[] DecryptedBytes = cryptoTransform.TransformFinalBlock(EncryptedBytes, 0, EncryptedBytes.Length);
             return System.Text.Encoding.ASCII.GetString(DecryptedBytes);
         }
-
-        public string GetPath()
-        {
-            var queryString = new Dictionary<string, string>()
-                {
-                    { "token", "66a53b58-8bd9-3cc3-9afe-89105c4f6b82" },
-
-                    { "opaque", "1cr8j1po4ejoer6nqm423jdpn3" },
-
-                };
-            var requestUri = QueryHelpers.AddQueryString("https://eid.ekeng.am/authorize", queryString);
-          //  var request = new HttpRequestMessage(HttpMethod.Patch, requestUri);
-
-            return requestUri;
-        }
     }
 }

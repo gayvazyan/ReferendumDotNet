@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Referendum.core;
 using Referendum.core.Entities;
 using Referendum.core.Models;
+using Referendum.core.Common;
 
 namespace Referendum.Pages
 {
@@ -26,6 +27,7 @@ namespace Referendum.Pages
             Citizen = new CitizenWebServiceResponse();
             ReferendumList = new List<ReferendumDb>();
             ReferendumModel = new ReferendumDb();
+            Result = new BprResult();
         }
 
         [BindProperty]
@@ -42,7 +44,11 @@ namespace Referendum.Pages
         [BindProperty]
         public bool Connect { get; set; }
         [BindProperty]
-        public string DataString { get; set; }
+        public BprResult Result { get; set; }
+
+        [BindProperty]
+        public string OpaqueUniqueID { get; set; }
+
         [BindProperty]
         public int ReferendumId { get; set; }
 
@@ -55,16 +61,19 @@ namespace Referendum.Pages
 
         public void PrepareData()
         {
-            Citizen = _webService.GetCitizen(DataString);
-            if (Citizen != null)
+            if (Result.status=="OK")
             {
-                ReferendumList = _referendumRepasitory.GetAll().ToList();
-                Show = true;
+                Citizen = _webService.GetCitizen(Result.data);
+                if (Citizen != null)
+                {
+                    ReferendumList = _referendumRepasitory.GetAll().ToList();
+                    Show = true;
+                }
             }
         }
         public void OnGet()
         {
-
+            OpaqueUniqueID = UniqueID.GetUniqueID();
         }
 
         public ActionResult OnPost()
@@ -112,10 +121,6 @@ namespace Referendum.Pages
                     }
                 }
             }
-
-
-            
-
             return Page();
         }
     }

@@ -10,6 +10,5 @@ namespace Referendum.core
     {
         CitizenWebServiceResponse GetCitizen(string data);
         Task<CitizenWebServiceResponse> GetCitizenById();
-        string GetPath();
     }
 }
