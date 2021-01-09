@@ -101,7 +101,15 @@ namespace Referendum.Pages
                 if (resultCitizen != null)
                 {
                     var referendum = _referendumRepasitory.GetByID((int)citizen.ReferendumId);
-                    referendum.ConnectionCount++;
+                    if (referendum.ConnectionCount==null)
+                    {
+                        referendum.ConnectionCount = 1;
+                    }
+                    else
+                    {
+                        referendum.ConnectionCount ++;
+                    }
+                  
                    _referendumRepasitory.Update(referendum);
 
                     return Redirect("/Connected/" + citizen.Opaque);

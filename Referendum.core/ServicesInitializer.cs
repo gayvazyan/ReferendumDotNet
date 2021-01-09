@@ -10,18 +10,19 @@ namespace Referendum
     {
         public static void ConfigureDbContext(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddDbContext<ReferendumContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("ReferendumDbConnection")));
-
            
-         
+
+            services.AddDbContextPool<ReferendumContext>(
+              options => options.UseSqlServer(configuration.GetConnectionString("ReferendumDbConnection")));
+
+
             //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddRoles<IdentityRole>()
             //    .AddEntityFrameworkStores<PecMembersDbContext>();
 
 
         }
-        
+
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient(typeof(IRepositories<>), typeof(Repositories<>));

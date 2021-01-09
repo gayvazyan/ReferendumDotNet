@@ -1,25 +1,18 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Referendum.core.Entities
 {
-    public partial class ReferendumContext : DbContext
+    public  class ReferendumContext : DbContext
     {
-        public ReferendumContext()
-        {
-        }
 
         public ReferendumContext(DbContextOptions<ReferendumContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<CitizenDb> CitizenDb { get; set; }
-        public virtual DbSet<ReferendumDb> ReferendumDb { get; set; }
-        public virtual DbSet<CommunitiesDb> CommunitiesDb { get; set; }
+        public DbSet<CitizenDb> CitizenDb { get; set; }
+        public DbSet<ReferendumDb> ReferendumDb { get; set; }
+        public DbSet<CommunitiesDb> CommunitiesDb { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {}
     }
 }

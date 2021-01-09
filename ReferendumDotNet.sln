@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Referendum", "Referendum\Referendum.csproj", "{CD4D3AD7-4088-46FC-B15D-15AB5C8DC872}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Referendum.core", "Referendum.core\Referendum.core.csproj", "{3046E0DA-4DC1-4D43-A40D-E17A53B0F4BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Referendum.core", "Referendum.core\Referendum.core.csproj", "{3046E0DA-4DC1-4D43-A40D-E17A53B0F4BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,57 @@
+﻿@page
+
+@model Referendum.Pages.Management.ReferendumT.IndexModel
+@{
+    ViewData["Title"] = "Հանրաքվեի նախաձեռնություններ";
+}
+
+
+<form method="post" id="form">
+    <div class="card margin-top-20">
+        @* ----- START Toolbar ---- *@
+        <div class="card-header" style="padding:5px">
+            <a href="/Management/ReferendumT/Create" class="btn btn-success" title="Ավելացնել">  <i class="nav-icon icon-plus"></i> Ավելացնել</a>
+        </div>
+        @* ----- END Toolbar ---- *@
+
+        @* ----- START Grid ---- *@
+        <div class="grid card-body p-0">
+            <table class="table table-responsive-sm table-striped">
+                <thead>
+                    <tr style="text-align:center;color:black">
+                        <td>Հանրաքվեի հարցը</td>
+                        <td>Սկիզ</td>
+                        <td>Ավարտ</td>
+                        <td>Միացած․ քանակ</td>
+                        <td>Համայնք</td>
+                        <td class="commands">Հրամաններ</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.InputList)
+                    {
+                        <tr style="text-align:center;color:black">
+                            <td style="max-width:500px">@item.Question</td>
+                            <td>@CommonFunctions.GetDateString(item.StartDate)</td>
+                            <td>@CommonFunctions.GetDateString(item.EndDate)</td>
+                            <td>@item.ConnectionCount</td>
+                            <td>@item.CommunityName</td>
+                           
+                                <td style="min-width:200px" class="commands">
+                                   
+                                        <a class="btn btn-info text-white" href="/Management/ReferendumT/Update/@item.Id" title="Թարմացնել">
+                                            <i class="nav-icon icon-pencil"></i>
+                                        </a>
+                                   
+                                        <a class="btn btn-danger" href="/Management/ReferendumT/Delete/@item.Id" title="Հեռացնել">
+                                            <i class="nav-icon icon-trash"></i>
+                                        </a>
+                                </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @* ----- END Grid ---- *@
+</form>

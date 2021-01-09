@@ -19,6 +19,9 @@
         <link href="~/lib/coreui/css/style.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="~/css/site.css" />
+
+        <link rel="stylesheet" href="~/lib/select2/select2.min.css">
+        <script src="~/lib/select2/select2.min.js"></script>
     </environment>
     <environment exclude="Development">
         <!-- VENDOR CSS -->
@@ -32,6 +35,9 @@
         <link href="~/lib/coreui/css/style.min.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+        <link rel="stylesheet" href="~/lib/select2/select2.min.css">
+        <script src="~/lib/select2/select2.min.js"></script>
     </environment>
 
     @RenderSection("Headers", required: false)
@@ -85,10 +91,13 @@
         <script src="~/lib/coreui/dist/js/coreui.js"></script>
         <!-- Plugins and scripts required by this view-->
         @*<script src="~/lib/chart.js/dist/Chart.js"></script>
-            <script src="~/lib/coreui/js/custom-tooltips.js"></script>
-            <script src="~/lib/coreui/js/main.js"></script>*@
+        <script src="~/lib/coreui/js/custom-tooltips.js"></script>
+        <script src="~/lib/coreui/js/main.js"></script>*@
 
         <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <link rel="stylesheet" href="~/lib/select2/select2.min.css">
+        <script src="~/lib/select2/select2.min.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -100,10 +109,13 @@
         <script src="~/lib/coreui/dist/js/coreui.min.js"></script>
         <!-- Plugins and scripts required by this view-->
         @*<script src="~/lib/chart.js/dist/Chart.min.js"></script>
-            <script src="~/lib/coreui/js/custom-tooltips.js"></script>
-            <script src="~/lib/coreui/js/main.js"></script>*@
+        <script src="~/lib/coreui/js/custom-tooltips.js"></script>
+        <script src="~/lib/coreui/js/main.js"></script>*@
 
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+        <link rel="stylesheet" href="~/lib/select2/select2.min.css">
+        <script src="~/lib/select2/select2.min.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

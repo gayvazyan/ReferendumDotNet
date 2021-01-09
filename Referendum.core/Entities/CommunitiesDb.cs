@@ -7,13 +7,10 @@ using System.Text;
 namespace Referendum.core.Entities
 {
 
-    [Table("CommunitiesDB")]
-    public partial class CommunitiesDb
+    public  class CommunitiesDb
     {
         public int Id { get; set; }
-        [StringLength(50)]
         public string CommunityCode { get; set; }
-        [StringLength(50)]
         public string CommunityName { get; set; }
     }
 }

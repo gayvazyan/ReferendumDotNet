@@ -1,0 +1,105 @@
+﻿@page
+@model Referendum.Pages.Management.ReferendumT.CreateModel
+@{
+    ViewData["Title"] = "Ավելացնել հանրաքվեի նախաձեռնություն";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="card card-input">
+        <div class="card-body p-0 d-flex align-items-center">
+            <i class="nav-icon icon-check bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+            <div>
+                <div class="text-value-sm text-info">@ViewData["Title"]</div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body row">
+            <div class="m-3 p-3 w-100" style="max-width:600px">
+                <div>
+                    <partial name="_ValidationSummary" />
+                    @if (Model.Errors.Count > 0)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                @foreach (var error in Model.Errors)
+                                {
+                                    <li>@error.Code: @error.Description</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+             
+                <div class="row">
+                    <div class="col-12">
+                        <label class="text-info" asp-for="Create.Question">Հանրաքվեի հարցը</label>
+                        <textarea class="form-control" asp-for="Create.Question"></textarea>
+                        <span asp-validation-for="Create.Question" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row margin-top-20">
+                    <div class="col-6">
+                        <label class="text-info" asp-for="Create.StartDate">Ստորագրահավաքի սկիզբ</label>
+                        <input class="form-control" type="date" asp-for="Create.StartDate">
+                        <span asp-validation-for="Create.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="text-info" asp-for="Create.EndDate">Ստորագրահավաքի ավարտ</label>
+                        <input class="form-control" type="date" asp-for="Create.EndDate">
+                        <span asp-validation-for="Create.EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row margin-top-20">
+                    <div class="col-6">
+                        <label class="text-info" asp-for="SelectedCommunityId">Ընտրեք համայնքը</label>
+                        <select class="one-select form-control" asp-for="SelectedCommunityId">
+                            <option value="">-- ընտրել --</option>
+                            @foreach (var item in Model.CommunityList)
+                            {
+                                <option value="@item.Id">@item.CommunityName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="SelectedCommunityId" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label style="padding-left:1.5rem" class="text-info" asp-for="IsActive">Ցուցադրել հիմնական էջում</label>
+                        <input class="form-control" type="checkbox" asp-for="IsActive">
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <br />
+
+                <div style="height:20px"></div>
+                <div class="row border-top margin-top-20" style="padding-top:20px">
+                    <div class="col-12">
+                        <button class="btn btn-success text-white"> <i class="nav-icon icon-check"></i> Ստեղծել</button>
+                        <a class="btn btn-secondary" asp-page="/Management/ReferendumT/Index"> <i class="nav-icon icon-close"></i> Չեղարկել</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+
+            $(".one-select").select2({
+                placeholder: " -- ընտրել --", //placeholder
+                tags: true,
+                tokenSeparators: ['/', ',', ';', " "]
+            });
+        });
+
+    </script>
+}
