@@ -4,63 +4,64 @@
     ViewData["Title"] = "ԿԸՀ-առցանց ստորագրահավաք";
 }
 
-
-
 <form method="post" id="form">
-
     <input type="hidden" asp-for="@Model.Citizen.Opaque" value="@Model.Citizen.Opaque" />
-  
 
-        <div style="text-align:center" class="card">
-            <div class="card-body row">
-                <div class="mt-0 mb-3 mx-3 w-100">
+    <div style="text-align:center" class="card">
+        <div class="card-body row">
+            <div class="mt-0 mb-3 mx-3 w-100">
 
-                   
-
-                        <div class="card card-input">
-                            <div class="row">
-                                <div class="col-10 ">
-                                    <div class="card-body p-0 d-flex align-items-center text-center">
-                                        <i class="nav-icon icon-user-following bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
-                                        <div>
-                                            <p class="text-muted">ՀԾՀ՝<b> @Model.Citizen.Ssn </b></p>
-                                            <p class="text-muted">Ազգանուն,Անուն՝ <b> @Model.Citizen.FirstName  @Model.Citizen.LastName</b></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="float:right" class="col-2">
-                                    <a href="/Index">
-                                        <i style="float:right" class="nav-icon icon-logout bg-blue p-4 px-5 font-2xl  text-white"></i>
-                                    </a>
+                <div class="card card-input">
+                    <div class="row">
+                        <div class="col-10 ">
+                            <div class="card-body p-0 d-flex align-items-center text-center">
+                                <i class="nav-icon icon-user-following bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+                                <div style="text-align:left">
+                                    <h5 class="text-muted">ՀԾՀ՝<b> @Model.Citizen.Ssn </b></h5>
+                                    <h5 class="text-muted">Ազգանուն,Անուն՝ <b> @Model.Citizen.FirstName  @Model.Citizen.LastName</b></h5>
                                 </div>
                             </div>
                         </div>
+                        <div style="float:right" class="col-2">
+                            <a href="/Index">
+                                <i style="float:right" class="nav-icon icon-logout bg-blue p-4 px-5 font-2xl  text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
 
-                       
-                            <div class="row margin-top-20">
-                                <div class="col-12">
-                                    <div class="alert alert-secondary border" role="alert">
-                                        <h5 class="text-info">Քաղաքացի  @Model.Citizen.FirstName  @Model.Citizen.LastName </h5>
-                                        <p class="text-value-sm text-muted font-weight-normal">Դուք մասնակցեցիք ստորագրությունների առցանց հավաքմանը</p>
-                                        <p class="text-value-sm text-muted font-weight-normal">ՁԵՐ ԿՈԴԸ ՝ @Model.Citizen.Opaque</p>
-                                        <br />
-                                        <a class="btn btn-secondary text-white" onclick="Cencel()"><i class="nav-icon icon-printer text-white"></i> Տպել հայտարարությունը</a>
-                                    </div>
-                                </div>
-                            </div>
-                       
-           
 
+                <div class="row margin-top-20">
+                    <div class="col-12">
+                        <div class="alert alert-secondary border" role="alert">
+                            <h3 class="text-info">Քաղաքացի` <b>@Model.Citizen.FirstName  @Model.Citizen.LastName</b> </h3>
+                            <br />
+                            <p class="text-value-sm text-muted font-weight-normal">Դուք հաջողությամբ մասնակցեցիք ստորագրությունների առցանց հավաքմանը:</p>
+                            <p class="text-value-sm text-muted font-weight-normal">Ձեր գրանցման ստուգման կոդը ՝ <b>@Model.Citizen.Opaque</b></p>
+                            <br />
+                            <a class="btn btn-info text-white" href="/"><i class="nav-icon icon-action-undo text-white"></i> Ելք համակարգից</a>
+                            <a class="btn btn-secondary text-white" onclick="window.print()"><i class="nav-icon icon-printer text-white"></i> Տպել հայտարարությունը</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
-   
-
-
+    </div>
 </form>
+
+@section Scripts {
+    <script>
+
+        //function Cencel() {
+        //    $("#Connect").val(false);
+        //    $("#Show").val(true);
+        //    $("form").submit();
+        //}
+
+    </script>
+}
+
+
 
 

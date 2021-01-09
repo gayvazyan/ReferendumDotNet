@@ -27,6 +27,7 @@ namespace Referendum
             services.AddTransient(typeof(IRepositories<>), typeof(Repositories<>));
             services.AddTransient<ICitizenRepasitory, CitizenRepasitory>();
             services.AddTransient<IReferendumRepasitory, ReferendumRepasitory>();
+            services.AddTransient<ICommunityRepasitory, CommunityRepasitory>();
             services.AddHttpClient<IWebService, WebService>();
             services.AddTransient<IWebService, WebService>();
 

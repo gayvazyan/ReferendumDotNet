@@ -1,0 +1,116 @@
+﻿@page
+@model Referendum.Pages.CheckModel
+@{
+    ViewData["Title"] = "Գրանցման ստուգում";
+}
+
+
+<form method="post" id="form">
+
+    @*<partial name="_ValidationSummary" />*@
+
+    <div class="card">
+        <div class="card-body row">
+            <div class="mt-0 mb-3 mx-3 w-100">
+                @if (Model.Errors.Count > 0)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="m-0">
+                            @foreach (var error in Model.Errors)
+                            {
+                                <li>@error.Code: @error.Description</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                @if (String.IsNullOrEmpty(Model.CheckCode))
+                {
+                    <div class="card card-input">
+                        <div class="row">
+                            <div class="col-10 ">
+                                <div class="card-body p-0 d-flex align-items-center text-center">
+                                    <i class="nav-icon icon-list bg-blue p-4 px-5 font-2xl mr-3 text-white"></i>
+                                    <div style="text-align:left">
+                                        <h5 class="text-muted">Գրանցման ստուգում</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="max-width:600px">
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <h5><label class="text-success">Մուտքագրեք գրանցման կոդը</label></h5>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <input class="form-control" type="text" asp-for="CheckCode">
+                                <span asp-validation-for="CheckCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:20px"></div>
+                    <div class="row border-top margin-top-20" style="padding-top:20px">
+                        <div class="col-12">
+                            <button class="btn btn-outline-info"><i class="nav-icon icon-key"></i> Ստուգել</button>
+                            <a class="btn btn-outline-danger" onclick="Reset()"><i class="nav-icon icon-trash"></i> Մաքրել</a>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="card card-input">
+                        <div class="row">
+                            <div class="col-10 ">
+                                <div class="card-body p-0 d-flex align-items-center text-center">
+                                        <i class="nav-icon icon-user-following bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+                                        <div style="text-align:left">
+                                            <h5 class="text-muted">ՀԾՀ՝<b> @Model.Info.CitizenSsn </b></h5>
+                                            <h5 class="text-muted">Ազգանուն,Անուն՝ <b> @Model.Info.CitizenFirstName  @Model.Info.CitizenLastName</b></h5>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div style="float:right" class="col-2">
+                                <a href="/Index">
+                                    <i style="float:right" class="nav-icon icon-logout bg-blue p-4 px-5 font-2xl  text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row margin-top-20">
+                        <div  class="col-8">
+                            <div class="alert alert-secondary border" role="alert">
+                                <h4 class="text-info">Քաղաքացի` <b>@Model.Info.CitizenFirstName  @Model.Info.CitizenLastName</b> </h4>
+                                <br />
+                                <p class="text-value-sm text-muted font-weight-normal">Դուք մասնակցել եք առցանց ստորագրահավաքին․</p>
+                                <p class="text-value-sm text-muted font-weight-normal"> @Model.Info.ReferendumQuestion</p>
+                                <h4 class="text-info">Մասնակցման ամսաթիվ՝ <span class="text-value-sm text-muted font-weight-normal"><b>@Model.Info.Date</b></span></h4>
+
+                                <br />
+                                <a class="btn btn-info text-white" href="/check"><i class="nav-icon icon-action-undo text-white"></i> Հետ</a>
+                                <a class="btn btn-secondary text-white" onclick="window.print()"><i class="nav-icon icon-printer text-white"></i> Տպել</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+
+        function Reset() {
+            $("#CheckCode").val('');
+            $("form").submit();
+        }
+
+    </script>
+}
+
+
+

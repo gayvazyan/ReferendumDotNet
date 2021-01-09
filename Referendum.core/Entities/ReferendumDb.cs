@@ -16,6 +16,8 @@ namespace Referendum.core.Entities
         [Column(TypeName = "date")]
         public DateTime? EndDate { get; set; }
         public int? ConnectionCount { get; set; }
+        public bool? IsActive { get; set; }
+        public int? CommunityId { get; set; }
         
     }
 }

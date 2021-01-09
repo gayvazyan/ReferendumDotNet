@@ -17,6 +17,7 @@ namespace Referendum.core.Entities
 
         public virtual DbSet<CitizenDb> CitizenDb { get; set; }
         public virtual DbSet<ReferendumDb> ReferendumDb { get; set; }
+        public virtual DbSet<CommunitiesDb> CommunitiesDb { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {}

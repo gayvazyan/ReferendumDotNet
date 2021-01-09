@@ -15,14 +15,18 @@ namespace Referendum.Pages
     {
         private readonly ICitizenRepasitory _citizenRepasitory;
         private readonly IReferendumRepasitory _referendumRepasitory;
+        private readonly ICommunityRepasitory _communityRepasitory;
+        
         private readonly IWebService _webService;
 
         public IndexModel(ICitizenRepasitory citizenRepasitory,
                           IReferendumRepasitory referendumRepasitory,
+                          ICommunityRepasitory communityRepasitory,
                           IWebService webService)
         {
             _citizenRepasitory = citizenRepasitory;
             _referendumRepasitory = referendumRepasitory;
+            _communityRepasitory = communityRepasitory;
             _webService = webService;
             Citizen = new CitizenWebServiceResponse();
             ReferendumList = new List<ReferendumDb>();
@@ -58,7 +62,6 @@ namespace Referendum.Pages
             get => _errors ?? (_errors = new List<ServiceError>());
             set => _errors = value;
         }
-
         public void PrepareData()
         {
             if (Result.Status=="OK")
@@ -70,12 +73,13 @@ namespace Referendum.Pages
                     Show = true;
                 }
             }
+            else
+            {
+                Errors.Add(new ServiceError { Code = "001", Description = Result.Message });
+            }
         }
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            //var test1 = await _webService.GetCitizenBySSN("6311780089");
-            var test1 = await _webService.GetCitizenBySSNTest("6311780089");
-           
             OpaqueUniqueID = UniqueID.GetUniqueID();
         }
 
@@ -93,9 +97,13 @@ namespace Referendum.Pages
                     ReferendumId = ReferendumId
 
                 };
-                var result = _citizenRepasitory.Insert(citizen);
-                if (result != null)
+                var resultCitizen = _citizenRepasitory.Insert(citizen);
+                if (resultCitizen != null)
                 {
+                    var referendum = _referendumRepasitory.GetByID((int)citizen.ReferendumId);
+                    referendum.ConnectionCount++;
+                   _referendumRepasitory.Update(referendum);
+
                     return Redirect("/Connected/" + citizen.Opaque);
                 }
             }
@@ -119,8 +127,24 @@ namespace Referendum.Pages
                     }
                     else
                     {
-                        Connect = true;
                         ReferendumModel = _referendumRepasitory.GetByID(ReferendumId);
+
+                        var communityNameBPR = _webService.GetCitizenBySSNTest(Citizen.Ssn).Result.Community;
+
+                        var communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityName == communityNameBPR).Id;
+                        
+                        if (communityIdBPR != ReferendumModel.CommunityId && ReferendumModel.CommunityId != null)
+                        {
+                            var communityNameRef = _communityRepasitory.GetAll().FirstOrDefault(p => p.Id == ReferendumModel.CommunityId).CommunityName;
+
+                            Errors.Add(new ServiceError { Code = "Սխալ", Description = "Քաղաքացի " + Citizen.Last_name + " " + Citizen.First_name + " Դուք հաշվառված էք  " + communityNameBPR + " համայնքում։ Սակայն հանրաքվեի նախաձեռնությանը որին դուք ցանկանում էք միանալ տեղի է ունենում " + communityNameRef + " համայնքում , որին Դուք իրավունք չունեք մասնակցել։" });
+                            PrepareData();
+                            return Page();
+                        }
+                        else
+                        {
+                            Connect = true;
+                        }
                     }
                 }
             }
