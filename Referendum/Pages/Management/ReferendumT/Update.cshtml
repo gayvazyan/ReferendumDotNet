@@ -1,14 +1,16 @@
-﻿@page
-@model Referendum.Pages.Management.ReferendumT.CreateModel
+﻿@page "{id:int}"
+@model Referendum.Pages.Management.ReferendumT.UpdateModel
 @{
-    ViewData["Title"] = "Ավելացնել հանրաքվեի նախաձեռնություն";
+    ViewData["Title"] = "Թարմացնել հանրաքվեի նախաձեռնությունը";
 }
 
 
 <form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="@Model.Update.Id" value="@Model.Update.Id" />
+    <input type="hidden" asp-for="@Model.Update.ConnectionCount" value="@Model.Update.ConnectionCount" />
     <div class="card card-input">
         <div class="card-body p-0 d-flex align-items-center">
-            <i class="nav-icon icon-check bg-success p-4 px-5 font-2xl mr-3 text-white"></i>
+            <i class="nav-icon icon-refresh bg-primary p-4 px-5 font-2xl mr-3 text-white"></i>
             <div>
                 <div class="text-value-sm text-info">@ViewData["Title"]</div>
             </div>
@@ -31,25 +33,25 @@
                         </div>
                     }
                 </div>
-             
+
                 <div class="row">
                     <div class="col-12">
-                        <label class="text-info" asp-for="Create.Question">Հանրաքվեի հարցը</label>
-                        <textarea rows="10" class="form-control" asp-for="Create.Question"></textarea>
-                        <span asp-validation-for="Create.Question" class="text-danger"></span>
+                        <label class="text-info" asp-for="Update.Question">Հանրաքվեի հարցը</label>
+                        <textarea rows="10" class="form-control" asp-for="Update.Question"></textarea>
+                        <span asp-validation-for="Update.Question" class="text-danger"></span>
                     </div>
                 </div>
                 <br />
                 <div class="row margin-top-20">
                     <div class="col-6">
-                        <label class="text-info" asp-for="Create.StartDate">Ստորագրահավաքի սկիզբ</label>
-                        <input class="form-control" type="date" asp-for="Create.StartDate">
-                        <span asp-validation-for="Create.StartDate" class="text-danger"></span>
+                        <label class="text-info" asp-for="Update.StartDate">Ստորագրահավաքի սկիզբ</label>
+                        <input class="form-control" type="date" asp-for="Update.StartDate">
+                        <span asp-validation-for="Update.StartDate" class="text-danger"></span>
                     </div>
                     <div class="col-6">
-                        <label class="text-info" asp-for="Create.EndDate">Ստորագրահավաքի ավարտ</label>
-                        <input class="form-control" type="date" asp-for="Create.EndDate">
-                        <span asp-validation-for="Create.EndDate" class="text-danger"></span>
+                        <label class="text-info" asp-for="Update.EndDate">Ստորագրահավաքի ավարտ</label>
+                        <input class="form-control" type="date" asp-for="Update.EndDate">
+                        <span asp-validation-for="Update.EndDate" class="text-danger"></span>
                     </div>
                 </div>
                 <br />
@@ -75,11 +77,12 @@
 
                 <br />
 
+
                 <div style="height:20px"></div>
                 <div class="row border-top margin-top-20" style="padding-top:20px">
                     <div class="col-12">
-                        <button class="btn btn-success text-white"> <i class="nav-icon icon-check"></i> Ստեղծել</button>
-                        <a class="btn btn-secondary" asp-page="/Management/ReferendumT/Index"> <i class="nav-icon icon-close"></i> Չեղարկել</a>
+                        <button class="btn btn-primary text-white"><i class="nav-icon icon-refresh"></i> Թարմացնել</button>
+                        <a class="btn btn-secondary" asp-page="/Management/ReferendumT/Index"><i class="nav-icon icon-close"></i> Չեղարկել</a>
                     </div>
                 </div>
             </div>
@@ -103,3 +106,4 @@
 
     </script>
 }
+

@@ -19,12 +19,12 @@
             <table class="table table-responsive-sm table-striped">
                 <thead>
                     <tr style="text-align:center;color:black">
-                        <td>Հանրաքվեի հարցը</td>
-                        <td>Սկիզ</td>
-                        <td>Ավարտ</td>
-                        <td>Միացած․ քանակ</td>
-                        <td>Համայնք</td>
-                        <td class="commands">Հրամաններ</td>
+                        <td><b>Հանրաքվեի հարցը</b></td>
+                        <td><b>Ստորագրահավաքի սկիզբ</b></td>
+                        <td><b>Ստորագրահավաքի ավարտ</b></td>
+                        <td><b>Միացած․ քանակ</b></td>
+                        <td><b>Համայնք</b></td>
+                        <td class="commands"><b>Հրամաններ</b></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,17 +36,27 @@
                             <td>@CommonFunctions.GetDateString(item.EndDate)</td>
                             <td>@item.ConnectionCount</td>
                             <td>@item.CommunityName</td>
-                           
-                                <td style="min-width:200px" class="commands">
-                                   
-                                        <a class="btn btn-info text-white" href="/Management/ReferendumT/Update/@item.Id" title="Թարմացնել">
-                                            <i class="nav-icon icon-pencil"></i>
-                                        </a>
-                                   
-                                        <a class="btn btn-danger" href="/Management/ReferendumT/Delete/@item.Id" title="Հեռացնել">
-                                            <i class="nav-icon icon-trash"></i>
-                                        </a>
-                                </td>
+
+                            <td style="min-width:200px" class="commands">
+                                @if (item.IsActive == true)
+                                {
+
+                                    <img onclick="EnableDisable(@item.Id)" src="~/images/enable.png" title="Ապաակտիվացնել" />
+
+                                }
+                                else
+                                {
+                                    <img onclick="EnableDisable(@item.Id)" src="~/images/disable.png" title="Ակտիվացնել" />
+                                }
+
+                                <a class="btn btn-info text-white" href="/Management/ReferendumT/Update/@item.Id" title="Թարմացնել">
+                                    <i class="nav-icon icon-pencil"></i>
+                                </a>
+
+                                <a class="btn btn-danger" href="/Management/ReferendumT/Delete/@item.Id" title="Հեռացնել">
+                                    <i class="nav-icon icon-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -55,3 +65,32 @@
     </div>
     @* ----- END Grid ---- *@
 </form>
+
+@section Scripts {
+
+    <script>
+        function EnableDisable(id) {
+            //$("#Id").val(id);
+            //$("form").submit();
+
+           
+            // Post data to Controller
+            $.ajax({
+                type: "post",
+                url: "/Home/PostResult",
+                contentType: 'application/json',
+                data: JSON.stringify(id),
+                success: function () {
+                    alert("Փոփոխությունը հաջողությամբ կատարվեց։");
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!");
+                },
+                
+                 });
+           
+        }
+    </script>
+}
+
