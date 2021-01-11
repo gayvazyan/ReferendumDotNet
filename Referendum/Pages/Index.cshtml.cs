@@ -138,7 +138,7 @@ namespace Referendum.Pages
                         ReferendumModel = _referendumRepasitory.GetByID(ReferendumId);
 
                        
-                        var communityNameBPR = _webService.GetCitizenBySSNTest(Citizen.Ssn).Result.Community;
+                        var communityNameBPR = _webService.GetCitizenBySSN(Citizen.Ssn).Result.Community;
                         //var communityCodeBPR = _webService.GetCitizenBySSNTest(Citizen.Ssn).Result.LocationCode;
 
                         var communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityName == communityNameBPR).Id;
