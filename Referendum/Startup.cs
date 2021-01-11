@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Referendum;
+using Microsoft.AspNetCore.Session;
+using System;
 
 namespace CoreUI_Free_Bootstrap_Admin
 {
@@ -28,15 +30,21 @@ namespace CoreUI_Free_Bootstrap_Admin
             ServicesInitializer.ConfigureServices(services);
 
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //part of Session
+            services.AddHttpContextAccessor();
+            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(30));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +60,9 @@ namespace CoreUI_Free_Bootstrap_Admin
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            //part of Session
+            app.UseSession();
 
             app.UseMvc();
         }

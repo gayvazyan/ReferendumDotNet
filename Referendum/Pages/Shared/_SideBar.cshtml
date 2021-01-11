@@ -1,4 +1,7 @@
-﻿<div class="sidebar">
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+
+<div class="sidebar">
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-item">
@@ -22,40 +25,52 @@
                     <i class="nav-icon icon-info"></i> Օգնություն
                 </a>
             </li>
-            <li class="nav-title">Կառավարման մենյու</li>
-            @*<li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="/ReferendumT">
-                <i class="nav-icon icon-check"></i> Հանրաքվե
-            </a>
-            <ul class="nav-dropdown-items">
+
+            @if (HttpContextAccessor.HttpContext.Session.GetString("user") == "login")
+            {
+                <li class="nav-title">Կառավարման մենյու</li>
+                @*<li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="/ReferendumT">
+                    <i class="nav-icon icon-check"></i> Հանրաքվե
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#">
+                            <i class="nav-icon icon-puzzle"></i> Մենյու1-1
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ReferendumT">
+                            <i class="nav-icon icon-puzzle"></i> Մենյոի1-2
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
                 <li class="nav-item">
-                    <a class="nav-link" href="/#">
-                        <i class="nav-icon icon-puzzle"></i> Մենյու1-1
+                    <a class="nav-link" href="/management/referendumt">
+                        <i class="nav-icon icon-pie-chart"></i>Հանրաքվե
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ReferendumT">
-                        <i class="nav-icon icon-puzzle"></i> Մենյոի1-2
+                    <a class="nav-link" href="/management/community">
+                        <i class="nav-icon icon-list"></i>Համայնքներ
                     </a>
                 </li>
-            </ul>
-        </li>*@
-            <li class="nav-item">
-                <a class="nav-link" href="/management/referendumt">
-                    <i class="nav-icon icon-pie-chart"></i>Հանրաքվե
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/management/community">
-                    <i class="nav-icon icon-list"></i>Համայնքներ
-                </a>
-            </li>
+            }
             <li class="nav-item mt-auto">
-                <a class="nav-link nav-link-success" href="https://www.elections.am/" target="_top">
+                <a  target="_blank" class="nav-link nav-link-success" href="https://www.elections.am/" target="_top">
                     <i class="nav-icon icon-globe"></i>ԿԸՀ կայք
                 </a>
             </li>
-        </ul>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("user") == "login")
+            {
+                <li class="nav-item">
+                    <a class="nav-link nav-link-info" href="/admin/Logout" target="_top">
+                        <i class="nav-icon icon-logout"></i> ԵԼՔ համակարգից
+                    </a>
+                </li>
+            }
+            </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>
 </div>

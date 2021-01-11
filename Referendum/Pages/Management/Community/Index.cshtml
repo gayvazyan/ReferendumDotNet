@@ -1,52 +1,57 @@
 ﻿@page
 @model Referendum.Pages.Management.Community.IndexModel
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Համայնքներ";
 }
 
+@if (HttpContextAccessor.HttpContext.Session.GetString("user") == "login")
+{
+    <form method="post" id="form">
+        <div class="card margin-top-20">
+            @* ----- START Toolbar ---- *@
+            <div class="card-header" style="padding:5px">
+                <a href="/Management/Community/Create" class="btn btn-success" title="Ավելացնել">  <i class="nav-icon icon-plus"></i> Ավելացնել</a>
+            </div>
+            @* ----- END Toolbar ---- *@
 
-<form method="post" id="form">
-    <div class="card margin-top-20">
-        @* ----- START Toolbar ---- *@
-        <div class="card-header" style="padding:5px">
-            <a href="/Management/Community/Create" class="btn btn-success" title="Ավելացնել">  <i class="nav-icon icon-plus"></i> Ավելացնել</a>
-        </div>
-        @* ----- END Toolbar ---- *@
-
-        @* ----- START Grid ---- *@
-        <div class="grid card-body p-0">
-            <table class="table table-responsive-sm table-striped">
-                <thead>
-                    <tr style="text-align:center;color:black">
-                        <td><b>Համայնքի ԻԴ</b></td>
-                        <td><b>Համայնքի կոդը ԲՊՌ-ում</b></td>
-                        <td><b>Համայնքի անվանումը</b></td>
-                        <td class="commands"><b>Հրամաններ</b></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.InputList)
-                    {
+            @* ----- START Grid ---- *@
+            <div class="grid card-body p-0">
+                <table class="table table-responsive-sm table-striped">
+                    <thead>
                         <tr style="text-align:center;color:black">
-                            <td>@item.Id</td>
-                            <td>@item.CommunityCode</td>
-                            <td>@item.CommunityName</td>
-
-                            <td style="min-width:200px" class="commands">
-
-                                <a class="btn btn-info text-white" href="/Management/Community/Update/@item.Id" title="Թարմացնել">
-                                    <i class="nav-icon icon-pencil"></i>
-                                </a>
-
-                                <a class="btn btn-danger" href="/Management/Community/Delete/@item.Id" title="Հեռացնել">
-                                    <i class="nav-icon icon-trash"></i>
-                                </a>
-                            </td>
+                            <td><b>Համայնքի ԻԴ</b></td>
+                            <td><b>Համայնքի կոդը ԲՊՌ-ում</b></td>
+                            <td><b>Համայնքի անվանումը</b></td>
+                            <td class="commands"><b>Հրամաններ</b></td>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InputList)
+                        {
+                            <tr style="text-align:center;color:black">
+                                <td>@item.Id</td>
+                                <td>@item.CommunityCode</td>
+                                <td>@item.CommunityName</td>
+
+                                <td style="min-width:200px" class="commands">
+
+                                    <a class="btn btn-info text-white" href="/Management/Community/Update/@item.Id" title="Թարմացնել">
+                                        <i class="nav-icon icon-pencil"></i>
+                                    </a>
+
+                                    <a class="btn btn-danger" href="/Management/Community/Delete/@item.Id" title="Հեռացնել">
+                                        <i class="nav-icon icon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @* ----- END Grid ---- *@
         </div>
-    </div>
-    @* ----- END Grid ---- *@
-</form>
+    </form>
+
+}
+

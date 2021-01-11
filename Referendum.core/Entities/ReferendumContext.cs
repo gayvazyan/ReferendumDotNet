@@ -13,6 +13,7 @@ namespace Referendum.core.Entities
         public DbSet<CitizenDb> CitizenDb { get; set; }
         public DbSet<ReferendumDb> ReferendumDb { get; set; }
         public DbSet<CommunitiesDb> CommunitiesDb { get; set; }
+        public DbSet<UserDb> UserDb { get; set; }
 
     }
 }
