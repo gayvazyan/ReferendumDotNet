@@ -21,6 +21,7 @@
                 <table class="table table-responsive-sm table-striped">
                     <thead>
                         <tr style="text-align:center;color:black">
+                            <td><b>Ակտիվ</b></td>
                             <td><b>Հանրաքվեի հարցը</b></td>
                             <td><b>Ստորագրահավաքի սկիզբ</b></td>
                             <td><b>Ստորագրահավաքի ավարտ</b></td>
@@ -33,13 +34,7 @@
                         @foreach (var item in Model.InputList)
                         {
                             <tr style="text-align:center;color:black">
-                                <td style="max-width:500px">@item.Question</td>
-                                <td>@CommonFunctions.GetDateString(item.StartDate)</td>
-                                <td>@CommonFunctions.GetDateString(item.EndDate)</td>
-                                <td>@item.ConnectionCount</td>
-                                <td>@item.CommunityName</td>
-
-                                <td style="min-width:200px" class="commands">
+                                <td>
                                     @if (item.IsActive == true)
                                     {
 
@@ -50,7 +45,17 @@
                                     {
                                         <img onclick="EnableDisable(@item.Id)" src="~/images/disable.png" title="Ակտիվացնել" />
                                     }
+                                </td>
+                                <td style="max-width:500px">@item.Question</td>
+                                <td>@CommonFunctions.GetDateString(item.StartDate)</td>
+                                <td>@CommonFunctions.GetDateString(item.EndDate)</td>
+                                <td>@item.ConnectionCount</td>
+                                <td>@item.CommunityName</td>
 
+                                <td style="min-width:200px" class="commands">
+                                <a class="btn btn-success text-white" href="@Url.Action("DownloadCitizenList", "File", new { referendumId = item.Id})" title="Ներբեռնել">
+                                    <i class="nav-icon icon-arrow-down"></i>
+                                </a>
                                     <a class="btn btn-info text-white" href="/Management/ReferendumT/Update/@item.Id" title="Թարմացնել">
                                         <i class="nav-icon icon-pencil"></i>
                                     </a>

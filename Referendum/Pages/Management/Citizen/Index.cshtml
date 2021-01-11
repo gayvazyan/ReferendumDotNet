@@ -1,0 +1,60 @@
+﻿@page
+@model Referendum.Pages.Management.Citizen.IndexModel
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Նախաձեռնությանը միացած քաղաքացիներ";
+}
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("user") == "login")
+{
+    <form method="post" id="form">
+        <div class="card margin-top-20">
+            @* ----- START Toolbar ---- *@
+            <div class="card-header" style="padding:5px">
+                <a href="/Management/Community/Create" class="btn btn-success" title="Ավելացնել">  <i class="nav-icon icon-plus"></i> Ավելացնել</a>
+            </div>
+            @* ----- END Toolbar ---- *@
+
+            @* ----- START Grid ---- *@
+            <div class="grid card-body p-0">
+                <table class="table table-responsive-sm table-striped">
+                    <thead>
+                        <tr style="text-align:center;color:black">
+                            <td><b>Ազգանուն,Անուն</b></td>
+                            <td><b>Համայնք</b></td>
+                            <td><b>ՀԾՀ</b></td>
+                            <td><b>Միացման ամսաթիվ</b></td>
+                            <td class="commands"><b>Հրամաններ</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InputList)
+                        {
+                            <tr style="text-align:center;color:black">
+                                <td>@item.FirstName @item.FirstName</td>
+                                <td>@item.ReferendumId</td>
+                                <td>@item.Ssn</td>
+                                <td>@item.Time</td>
+
+                                <td style="min-width:200px" class="commands">
+
+                                    <a class="btn btn-info text-white" href="/Management/Community/Update/@item.Id" title="Թարմացնել">
+                                        <i class="nav-icon icon-pencil"></i>
+                                    </a>
+
+                                    <a class="btn btn-danger" href="/Management/Community/Delete/@item.Id" title="Հեռացնել">
+                                        <i class="nav-icon icon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @* ----- END Grid ---- *@
+        </div>
+    </form>
+
+}
+
