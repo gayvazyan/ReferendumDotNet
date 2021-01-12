@@ -17,35 +17,31 @@ namespace Referendum.Pages.Management.Community
             _communityRepasitory = communityRepasitory;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int CurrentPage { get; set; } = 1;
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 10;
 
-        public List<InputModel> InputList = new List<InputModel>();
-        public class InputModel : CommunitiesDb { }
-        
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
 
-        protected void PrepareData()
-        {
-            var communities = _communityRepasitory.GetAll().ToList();
+        public List<CommunitiesDb> CommunitiyList { get; set; }
 
-            InputList = communities.Select(p =>
-            {
-                return new InputModel()
-                {
-                    Id = p.Id,
-                    CommunityCode = p.CommunityCode,
-                    CommunityName = p.CommunityName 
-                };
-            }).ToList();
-        }
+        public bool ShowPrevious => CurrentPage > 1;
+     //   public bool ShowCurrent => CurrentPage == CurrentPage;
+        public bool ShowNext => CurrentPage < TotalPages;
+        public bool ShowFirst => CurrentPage != 1;
+        public bool ShowLast => CurrentPage != TotalPages;
+
         public void OnGet()
         {
-            PrepareData();
+           var communitiyList = _communityRepasitory.GetAll().ToList();
+
+            CommunitiyList = _communityRepasitory.GetPaginatedResult(communitiyList, CurrentPage, PageSize);
+            Count = _communityRepasitory.GetCount(communitiyList);
         }
 
         public ActionResult OnPost()
         {
-            PrepareData();
             return Page();
         }
     }
