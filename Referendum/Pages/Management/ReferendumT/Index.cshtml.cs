@@ -19,7 +19,9 @@ namespace Referendum.Pages.Management.ReferendumT
         {
             _referendumRepasitory = referendumRepasitory;
             _communityRepasitory = communityRepasitory;
+            Input = new InputModel();
             InputList = new List<InputModel>();
+            CommunityList = new List<CommunitiesDb>();
 
         }
 
@@ -32,11 +34,62 @@ namespace Referendum.Pages.Management.ReferendumT
             public string CommunityName { get; set; }
         }
 
+        // START Part Paging
+        [BindProperty(SupportsGet = true)]
+        public int CurrentPage { get; set; } = 1;
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 5;
+
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+
+        public List<ReferendumDb> ReferendumList { get; set; }
+
+        public bool ShowPrevious => CurrentPage > 1;
+        public bool ShowNext => CurrentPage < TotalPages;
+        public bool ShowFirst => CurrentPage != 1;
+        public bool ShowLast => CurrentPage != TotalPages;
+        // END Part Paging
+
+
+        [BindProperty]
+        public string SelectedCommunityId { get; set; }
+        [BindProperty]
+        public List<CommunitiesDb> CommunityList { get; set; }
+
+
         protected void PrepareData()
         {
-            var referendum = _referendumRepasitory.GetAll().ToList();
+            CommunityList = _communityRepasitory.GetAll().ToList();
 
-            InputList = referendum.Select(p =>
+            var referendumList = _referendumRepasitory.GetAll().ToList();
+
+
+
+            if (Input.Question != null)
+            {
+                referendumList = referendumList.Where(p => p.Question.ToUpper().Contains(Input.Question.ToUpper())).ToList();
+            }
+
+            if (Input.StartDate != null)
+            {
+                referendumList = referendumList.Where(p => p.StartDate >= Input.StartDate).ToList();
+            }
+
+            if (Input.EndDate != null)
+            {
+                referendumList = referendumList.Where(p => p.EndDate <= Input.EndDate).ToList();
+            }
+
+            if (SelectedCommunityId != null)
+            {
+                referendumList = referendumList.Where(p => p.CommunityId==Convert.ToInt32(SelectedCommunityId)).ToList();
+            }
+
+
+            ReferendumList = _referendumRepasitory.GetPaginatedResult(referendumList, CurrentPage, PageSize);
+            Count = _referendumRepasitory.GetCount(referendumList);
+
+            InputList = ReferendumList.Select(p =>
             {
                 return new InputModel()
                 {
