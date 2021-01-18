@@ -141,14 +141,20 @@ namespace Referendum.Pages
                         var communityNameBPR = _webService.GetCitizenBySSN(Citizen.Ssn).Result.Community;
                         //var communityCodeBPR = _webService.GetCitizenBySSNTest(Citizen.Ssn).Result.LocationCode;
 
-                        var communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityName == communityNameBPR).Id;
-                       // var communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityCode == communityCodeBPR).Id;
-                        
+                        var communityIdBPR = 0;
+                        if (communityNameBPR!=null)
+                        {
+                           communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityName == communityNameBPR).Id;
+                            //  communityIdBPR = _communityRepasitory.GetAll().FirstOrDefault(p => p.CommunityCode == communityCodeBPR).Id;
+                        }
+
+
+
                         if (communityIdBPR != ReferendumModel.CommunityId && ReferendumModel.CommunityId != null)
                         {
                             var communityNameRef = _communityRepasitory.GetAll().FirstOrDefault(p => p.Id == ReferendumModel.CommunityId).CommunityName;
 
-                            Errors.Add(new ServiceError { Code = "Սխալ", Description = "Քաղաքացի " + Citizen.Last_name + " " + Citizen.First_name + " Դուք հաշվառված էք  " + communityNameBPR + " համայնքում։ Սակայն հանրաքվեի նախաձեռնությանը որին դուք ցանկանում էք միանալ տեղի է ունենում " + communityNameRef + " համայնքում , որին Դուք իրավունք չունեք մասնակցել։" });
+                            Errors.Add(new ServiceError { Code = "Սխալ", Description = "Քաղաքացի " + Citizen.Last_name + " " + Citizen.First_name + " Դուք հաշվառված էք  \"" + communityNameBPR + "\" համայնքում։ Սակայն հանրաքվեի նախաձեռնությանը որին դուք ցանկանում էք միանալ տեղի է ունենում \"" + communityNameRef + "\" համայնքում , որին Դուք իրավունք չունեք մասնակցել։" });
                             PrepareData();
                             return Page();
                         }

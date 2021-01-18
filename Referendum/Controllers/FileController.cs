@@ -44,6 +44,12 @@ namespace Referendum.Controllers
                 worksheet1.Rows(1, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 worksheet1.Rows(1, 4).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
+                worksheet1.Row(1).Height = 20;
+                worksheet1.Row(2).Height = 80;
+                worksheet1.Row(3).Height = 20;
+                worksheet1.Row(4).Height = 20;
+
+
                 worksheet1.Column(1).Width = 5;
                 worksheet1.Column(2).Width = 20;
                 worksheet1.Column(3).Width = 20;
