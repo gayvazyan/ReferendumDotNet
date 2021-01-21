@@ -12,23 +12,21 @@
         <input type="hidden" asp-for="@Model.CurrentPage" value="@Model.CurrentPage" />
         <div class="card margin-top-20">
             @* ----- START Toolbar ---- *@
-            <div class="card-header" style="padding:5px;">
-                <div class="card-header-actions" style="margin-right:5px;">
-                    <a class=" btn btn-secondary text-white" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true">
-                        <i class="nav-icon icon-magnifier"></i>
-                    </a>
-                </div>
-            </div>
-
+            @*<div class="card-header" style="padding:5px;">
+                    <div class="card-header-actions" style="margin-right:5px;">
+                        <a class=" btn btn-secondary text-white" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true">
+                            <i class="nav-icon icon-magnifier"></i>
+                        </a>
+                    </div>
+                </div>*@
             @* ----- END Toolbar ---- *@
 
             @* ----- START Search ---- *@
-
-            <div class="collapse" id="collapseSearch">
+            <div>
                 <div class="card-body row searchCard" style="padding-bottom:0">
                     <div class="col-lg-6">
                         <div class="input-group mb-3">
-                            <select class="form-control" asp-for="@Model.Input.ReferendumId">
+                            <select class="one-select" asp-for="@Model.Input.ReferendumId">
                                 <option value="">-- ընտրել հանրաքվեն--</option>
                                 @foreach (var item in Model.SelectReferendumList)
                                 {
@@ -63,7 +61,7 @@
                         @foreach (var item in Model.InputList)
                         {
                             <tr style="text-align:center;color:black">
-                                <td  style="min-width:200px" >@item.FirstName @item.LastName</td>
+                                <td style="min-width:200px">@item.FirstName @item.LastName</td>
                                 <td>@item.Time</td>
                                 <td>@item.Ssn</td>
                                 <td>@item.Question</td>
@@ -86,52 +84,52 @@
 
     @* ----- Start Pagination ---- *@
     <nav aria-label="Page navigation example">
-            <ul class="pagination" style="margin-left: 30px;">
-                <li class="page-item @(!Model.ShowFirst? "disabled":"")">
-                    <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="1" class="page-link"><i class="nav-icon icon-control-start"></i></a>
+        <ul class="pagination" style="margin-left: 30px;">
+            <li class="page-item @(!Model.ShowFirst? "disabled":"")">
+                <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="1" class="page-link"><i class="nav-icon icon-control-start"></i></a>
+            </li>
+
+            @if ((Model.CurrentPage) == 1)
+            {
+                <li class="page-item @(!Model.ShowPrevious? "disabled":"")">
+                    <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage)" class="page-link">@(Model.CurrentPage)</a>
                 </li>
 
-                @if ((Model.CurrentPage) == 1)
+                <li class="page-item  @(!Model.ShowNext? "disabled":"")">
+                    <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="page-link">@(Model.CurrentPage + 1)</a>
+                </li>
+            }
+            else
+            {
+                @if (Model.CurrentPage < Model.TotalPages)
                 {
                     <li class="page-item @(!Model.ShowPrevious? "disabled":"")">
+                        <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage -1)" class="page-link">@(Model.CurrentPage-1)</a>
+                    </li>
+                    <li class="page-item @(!Model.ShowPrevious? "disabled":"disabled")">
                         <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage)" class="page-link">@(Model.CurrentPage)</a>
                     </li>
-
                     <li class="page-item  @(!Model.ShowNext? "disabled":"")">
                         <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="page-link">@(Model.CurrentPage + 1)</a>
                     </li>
                 }
                 else
                 {
-                    @if (Model.CurrentPage < Model.TotalPages)
-                    {
-                        <li class="page-item @(!Model.ShowPrevious? "disabled":"")">
-                            <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage -1)" class="page-link">@(Model.CurrentPage-1)</a>
-                        </li>
-                        <li class="page-item @(!Model.ShowPrevious? "disabled":"disabled")">
-                            <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage)" class="page-link">@(Model.CurrentPage)</a>
-                        </li>
-                        <li class="page-item  @(!Model.ShowNext? "disabled":"")">
-                            <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="page-link">@(Model.CurrentPage + 1)</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="page-item @(!Model.ShowPrevious? "disabled":"")">
-                            <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage -1)" class="page-link">@(Model.CurrentPage-1)</a>
-                        </li>
-                        <li class="page-item @(!Model.ShowPrevious? "disabled":"disabled")">
-                            <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage)" class="page-link">@(Model.CurrentPage)</a>
-                        </li>
-                    }
-
+                    <li class="page-item @(!Model.ShowPrevious? "disabled":"")">
+                        <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage -1)" class="page-link">@(Model.CurrentPage-1)</a>
+                    </li>
+                    <li class="page-item @(!Model.ShowPrevious? "disabled":"disabled")">
+                        <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@(Model.CurrentPage)" class="page-link">@(Model.CurrentPage)</a>
+                    </li>
                 }
 
-                <li class="page-item  @(!Model.ShowLast? "disabled":"")">
-                    <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@Model.TotalPages" class="page-link">  <i class="nav-icon icon-control-end"></i></a>
-                </li>
-            </ul>
-        </nav>
+            }
+
+            <li class="page-item  @(!Model.ShowLast? "disabled":"")">
+                <a asp-page="/Management/Participant/Index" asp-route-CurrentPage="@Model.TotalPages" class="page-link">  <i class="nav-icon icon-control-end"></i></a>
+            </li>
+        </ul>
+    </nav>
     @* ----- End Pagination ---- *@
 
 }
@@ -148,7 +146,20 @@ else
 
 
 @section Scripts {
+
     <partial name="_CommonFunctions" />
+
+    <script>
+        $(document).ready(function () {
+            $(".one-select").select2({
+              @*  placeholder: " -- ընտրել --", //placeholder*@
+                tags: true,
+                tokenSeparators: ['/', ',', ';', " "]
+            });
+        });
+    </script>
 }
+
+
 
 

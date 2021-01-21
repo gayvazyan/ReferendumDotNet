@@ -10,6 +10,7 @@
 {
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="@Model.View.Id" value="@Model.View.Id" />
+        <input type="hidden" asp-for="@Model.View.ImageSource" value="@Model.View.ImageSource" />
         <div class="card card-input">
             <div class="card-body p-0 d-flex align-items-center">
                 <i class="nav-icon icon-book-open bg-primary p-4 px-5 font-2xl mr-3 text-white"></i>
@@ -35,7 +36,6 @@
                             </div>
                         }
                     </div>
-
                     <div style="max-width:700px">
                         <div class="row">
                             <div class="col-12 mt-2">
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="col-4 mt-2">
-                                <img style="width:200px" src="@Model.View.ImageSource" alt="@(Model.View.FirstName + " " +  Model.View.LastName)">
+                                <img style="width:200px; padding-right:10px;" src="@Model.View.ImageSource" alt="@(Model.View.FirstName + " " +  Model.View.LastName)">
                             </div>
                             <div class="col-8 mt-2">
                                 <table class="table table-sm text-muted">
@@ -68,22 +68,20 @@
                                         <tr>
                                             <td class="font-weight-bold">Ծննդյան ա/թ</td>
                                             <td>
-                                                @*@CommonFunctions.GetDateString(Model.View.Birthdate)*@
-                                                @Model.View.Birthdate
+                                                @CommonFunctions.GetDateString(Model.View.Birthdate)
                                             </td>
                                         </tr>
                                         <tr class="border-bottom-color">
                                             <td class="font-weight-bold">Սեռ</td>
                                             <td>
-                                                @*@if (Model.View.Gender == true)
-                                                    {
-                                                        <span>Արական</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>Իգական</span>
-                                                    }*@
-                                                @Model.View.Gender
+                                                @if (Model.View.Gender == true)
+                                                {
+                                                    <span>Արական</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Իգական</span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
@@ -94,29 +92,12 @@
                                 </table>
                             </div>
                         </div>
-
-
-                        <div class="row margin-top-20">
-                            <div class="col-6 mt-2">
-                                @*<label class="text-info" asp-for="Create.WorkPosition">Աշխատանքային պաշտոնը</label>
-                                    <input class="form-control" type="text" asp-for="Create.WorkPosition">
-                                    <span asp-validation-for="Create.WorkPosition" class="text-danger"></span>*@
+                        <br />
+                        <div style="height:20px"></div>
+                        <div class="row border-top margin-top-20" style="padding-top:20px">
+                            <div class="col-12">
+                                <a class="btn btn-info text-white" asp-page="/Management/Participant/Index"><i class="nav-icon icon-arrow-left"></i> Վերադառնալ ցուցակին</a>
                             </div>
-                            <div class="col-6 mt-2">
-                                @*<label class="text-info" asp-for="Create.WorkAddress">Աշխատավայրի հասցեն</label>
-                                    <input class="form-control" type="text" asp-for="Create.WorkAddress">
-                                    <span asp-validation-for="Create.WorkAddress" class="text-danger"></span>*@
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-
-
-
-                    <div style="height:20px"></div>
-                    <div class="row border-top margin-top-20" style="padding-top:20px">
-                        <div class="col-12">
-                            <a class="btn btn-info text-white" asp-page="/Management/Participant/Index"><i class="nav-icon icon-arrow-left"></i> Վերադառնալ ցուցակին</a>
                         </div>
                     </div>
                 </div>

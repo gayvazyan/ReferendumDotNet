@@ -30,13 +30,9 @@ namespace Referendum.Pages.Management.Participant
         {
             public string Question { get; set; }
             public string ImageSource { get; set; }
-            public string Birthdate { get; set; }
-            public string Gender { get; set; }
+            public DateTime? Birthdate { get; set; }
+            public bool? Gender { get; set; }
             public string MiddleName { get; set; }
-            
-
-
-
         }
 
         [BindProperty]
@@ -63,11 +59,12 @@ namespace Referendum.Pages.Management.Participant
                 View.Ssn = result.Ssn;
                 View.Time = result.Time;
                 View.Question = _referendumRepasitory.GetAll().ToList().FirstOrDefault(r => r.Id == result.Id).Question;
-                View.ImageSource = citizenBySSN.Result.Photo;
-                View.Birthdate = citizenBySSN.Result.BirthDate;
-                View.Gender = citizenBySSN.Result.Gender;
+                View.Birthdate = DateTime.ParseExact(citizenBySSN.Result.BirthDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); 
+                View.Gender = (citizenBySSN.Result.Gender == "M") ? true : false;
                 View.MiddleName = citizenBySSN.Result.MiddleName;
-
+               
+                byte[] data = Convert.FromBase64String(citizenBySSN.Result.Photo);
+                View.ImageSource = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(data));
             }
         }
 
