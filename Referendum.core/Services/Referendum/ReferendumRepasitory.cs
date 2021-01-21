@@ -8,7 +8,7 @@ namespace Referendum.core
     {
         public ReferendumRepasitory(ReferendumContext dbContext) : base(dbContext) { }
 
-        public List<ReferendumDb> GetPaginatedResult(List<ReferendumDb> data, int currentPage, int pageSize = 10)
+        public List<ReferendumDb> GetPaginatedResult(List<ReferendumDb> data, int currentPage, int pageSize)
         {
             return data.OrderBy(d => d.Id).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
