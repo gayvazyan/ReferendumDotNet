@@ -1,0 +1,134 @@
+﻿@page "{id:int}"
+@model Referendum.Pages.Management.Participant.ViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Դիտել";
+}
+
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("user") == "login")
+{
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="@Model.View.Id" value="@Model.View.Id" />
+        <div class="card card-input">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="nav-icon icon-book-open bg-primary p-4 px-5 font-2xl mr-3 text-white"></i>
+                <div>
+                    <div class="text-value-sm text-info">@ViewData["Title"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body row">
+                <div class="m-3 p-3 w-100" style="max-width:600px">
+                    <div>
+                        <partial name="_ValidationSummary" />
+                        @if (Model.Errors.Count > 0)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    @foreach (var error in Model.Errors)
+                                    {
+                                        <li>@error.Code: @error.Description</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+
+                    <div style="max-width:700px">
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <div class="alert alert-secondary border" role="alert">
+                                    @Model.View.Question
+                                </div>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img style="width:200px" src="@Model.View.ImageSource" alt="@(Model.View.FirstName + " " +  Model.View.LastName)">
+                            </div>
+                            <div class="col-8 mt-2">
+                                <table class="table table-sm text-muted">
+                                    <tbody>
+                                        <tr class="border-top-color">
+                                            <td class="font-weight-bold">Ազգանուն</td>
+                                            <td>@Model.View.FirstName</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Անուն</td>
+                                            <td>@Model.View.LastName</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Հայրանուն</td>
+                                            <td>@Model.View.MiddleName</td>
+                                        </tr>
+                                        <tr class="border-bottom-color">
+                                            <td class="font-weight-bold">ՀԾՀ</td>
+                                            <td>@Model.View.Ssn</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Ծննդյան ա/թ</td>
+                                            <td>
+                                                @*@CommonFunctions.GetDateString(Model.View.Birthdate)*@
+                                                @Model.View.Birthdate
+                                            </td>
+                                        </tr>
+                                        <tr class="border-bottom-color">
+                                            <td class="font-weight-bold">Սեռ</td>
+                                            <td>
+                                                @*@if (Model.View.Gender == true)
+                                                    {
+                                                        <span>Արական</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Իգական</span>
+                                                    }*@
+                                                @Model.View.Gender
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Ստորագրման ամսաթիվ</td>
+                                            <td>@Model.View.Time</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="row margin-top-20">
+                            <div class="col-6 mt-2">
+                                @*<label class="text-info" asp-for="Create.WorkPosition">Աշխատանքային պաշտոնը</label>
+                                    <input class="form-control" type="text" asp-for="Create.WorkPosition">
+                                    <span asp-validation-for="Create.WorkPosition" class="text-danger"></span>*@
+                            </div>
+                            <div class="col-6 mt-2">
+                                @*<label class="text-info" asp-for="Create.WorkAddress">Աշխատավայրի հասցեն</label>
+                                    <input class="form-control" type="text" asp-for="Create.WorkAddress">
+                                    <span asp-validation-for="Create.WorkAddress" class="text-danger"></span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+
+                    <div style="height:20px"></div>
+                    <div class="row border-top margin-top-20" style="padding-top:20px">
+                        <div class="col-12">
+                            <a class="btn btn-info text-white" asp-page="/Management/Participant/Index"><i class="nav-icon icon-arrow-left"></i> Վերադառնալ ցուցակին</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-danger m-3" role="alert">
+        <h5>Այս տվյալներին հասանելիություն չունեք։</h5>
+    </div>
+}
+
+

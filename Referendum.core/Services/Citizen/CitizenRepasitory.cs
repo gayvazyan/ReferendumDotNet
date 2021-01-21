@@ -10,10 +10,15 @@ namespace Referendum.core
 {
     public class CitizenRepasitory : Repositories<CitizenDb>, ICitizenRepasitory
     {
-        public CitizenRepasitory(ReferendumContext dbContext) : base(dbContext) 
+        public CitizenRepasitory(ReferendumContext dbContext) : base(dbContext)  { }
 
+        public List<CitizenDb> GetPaginatedResult(List<CitizenDb> data, int currentPage, int pageSize)
         {
-           
+            return data.OrderBy(d => d.Id).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+        }
+        public int GetCount(List<CitizenDb> data)
+        {
+            return data.Count;
         }
     }
 }

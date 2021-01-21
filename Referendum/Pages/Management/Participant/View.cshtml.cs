@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Referendum.core;
+using Referendum.core.Entities;
+
+namespace Referendum.Pages.Management.Participant
+{
+   public class ViewModel : PageModel
+    {
+        private readonly ICitizenRepasitory _citizenRepasitory;
+        private readonly ICommunityRepasitory _communityRepasitory;
+        private readonly IReferendumRepasitory _referendumRepasitory;
+        private readonly IWebService _webService;
+        public ViewModel(ICitizenRepasitory citizenRepasitory,
+                         ICommunityRepasitory communityRepasitory,
+                         IReferendumRepasitory referendumRepasitory,
+                         IWebService webService)
+        {
+            _citizenRepasitory = citizenRepasitory;
+            _communityRepasitory = communityRepasitory;
+            _referendumRepasitory = referendumRepasitory;
+            _webService = webService;
+            View = new ViewCitizenModelModel();
+        }
+        public class ViewCitizenModelModel : CitizenDb 
+        {
+            public string Question { get; set; }
+            public string ImageSource { get; set; }
+            public string Birthdate { get; set; }
+            public string Gender { get; set; }
+            public string MiddleName { get; set; }
+            
+
+
+
+        }
+
+        [BindProperty]
+        public ViewCitizenModelModel View { get; set; }
+
+        private List<ServiceError> _errors;
+        public List<ServiceError> Errors
+        {
+            get => _errors ?? (_errors = new List<ServiceError>());
+            set => _errors = value;
+        }
+
+        public void OnGet(int id)
+        {
+            var result = _citizenRepasitory.GetByID(id);
+            var citizenBySSN = _webService.GetCitizenBySSN(result.Ssn); 
+            //.Result.Community;
+
+            if (result != null)
+            {
+                View.Id = result.Id;
+                View.FirstName = result.FirstName;
+                View.LastName = result.LastName;
+                View.Ssn = result.Ssn;
+                View.Time = result.Time;
+                View.Question = _referendumRepasitory.GetAll().ToList().FirstOrDefault(r => r.Id == result.Id).Question;
+                View.ImageSource = citizenBySSN.Result.Photo;
+                View.Birthdate = citizenBySSN.Result.BirthDate;
+                View.Gender = citizenBySSN.Result.Gender;
+                View.MiddleName = citizenBySSN.Result.MiddleName;
+
+            }
+        }
+
+        public ActionResult OnPost()
+        {
+            return Page();
+        }
+    }
+}
