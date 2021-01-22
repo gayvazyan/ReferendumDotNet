@@ -49,7 +49,6 @@ namespace Referendum.Pages.Management.Participant
         {
             var result = _citizenRepasitory.GetByID(id);
             var citizenBySSN = _webService.GetCitizenBySSN(result.Ssn); 
-            //.Result.Community;
 
             if (result != null)
             {
@@ -58,7 +57,7 @@ namespace Referendum.Pages.Management.Participant
                 View.LastName = result.LastName;
                 View.Ssn = result.Ssn;
                 View.Time = result.Time;
-                View.Question = _referendumRepasitory.GetAll().ToList().FirstOrDefault(r => r.Id == result.Id).Question;
+                View.Question = _referendumRepasitory.GetAll().ToList().Find(r => r.Id == result.ReferendumId).Question;
                 View.Birthdate = DateTime.ParseExact(citizenBySSN.Result.BirthDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); 
                 View.Gender = (citizenBySSN.Result.Gender == "M") ? true : false;
                 View.MiddleName = citizenBySSN.Result.MiddleName;
